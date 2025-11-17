@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    tools {
+        jdk 'jdk17'
+        maven 'Maven3'
+    }
     stages {
 
         stage('Checkout') {
@@ -11,6 +14,7 @@ pipeline {
 
         stage('Test') {
             steps {
+                bat 'mvn -U clean test'
                 echo 'Running tests...'
                 bat './mvnw test'
                 echo 'les tests passent'
