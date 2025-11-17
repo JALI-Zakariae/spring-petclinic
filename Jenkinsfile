@@ -13,6 +13,7 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 bat './mvnw test'
+                echo 'les tests passent'
             }
         }
 
@@ -23,7 +24,6 @@ pipeline {
             }
         }
 
-        
 
         
         stage('Finished') {
