@@ -11,7 +11,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'mvn -U clean test'
+                bat 'mvnw -U clean test'
                 echo 'Running tests...'
                 bat './mvnw test'
                 echo 'les tests passent'
