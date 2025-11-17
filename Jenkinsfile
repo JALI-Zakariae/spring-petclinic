@@ -12,14 +12,14 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh './mvnw test'
+                bat './mvnw test'
             }
         }
 
         stage('Package') {
             steps {
                 echo 'Building JAR...'
-                sh './mvnw clean package'
+                bat './mvnw clean package'
             }
         }
 
