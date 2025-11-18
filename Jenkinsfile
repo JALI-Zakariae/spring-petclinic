@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.0-openjdk-17'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -36,13 +31,7 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
-            steps {
-                echo 'Building Docker image...'
-                sh "docker build -t petclinic:${BUILD_NUMBER} ."
-                sh "docker run -d -p 9090:9090 --name petclinic-test petclinic:${BUILD_NUMBER}"
-            }
-        }
+
 
         stage('Finished') {
             steps {
