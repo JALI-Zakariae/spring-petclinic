@@ -16,6 +16,20 @@ pipeline {
                 echo 'les tests passent'
             }
         }
+        stage('SonarCloud Analysis') {
+                    steps {
+                        withSonarQubeEnv('SonarCloud') {
+                            sh """
+                                ${tool('SonarScanner')}/bin/sonar-scanner \
+                                -Dsonar.projectKey=JALI-Zakariae_spring-petclinic \
+                                -Dsonar.organization=jali-zakariae \
+                                -Dsonar.sources=. \
+                                -Dsonar.java.binaries=target/classes \
+                                -Dsonar.host.url=https://sonarcloud.io
+                            """
+                        }
+                    }
+                }
 
         stage('Package') {
             steps {
