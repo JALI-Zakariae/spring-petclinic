@@ -25,7 +25,7 @@ pipeline {
                     sh """
                         ${tool('SonarScanner')}/bin/sonar-scanner \
                         -Dsonar.projectKey=YassineZitouni29_spring-petclinic \
-                        -Dsonar.organization=YassineZitouni29 \
+                        -Dsonar.organization=yassinezitouni29 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=https://sonarcloud.io
                     """
