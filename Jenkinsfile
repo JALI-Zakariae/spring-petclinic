@@ -12,7 +12,7 @@ pipeline {
             steps {
 
                 echo 'Running tests...'
-                bat './mvnw test'
+                sh './mvnw test'
                 echo 'les tests passent'
             }
         }
@@ -20,7 +20,7 @@ pipeline {
         stage('Package') {
             steps {
                 echo 'Building JAR...'
-                bat './mvnw clean package'
+                sh './mvnw clean package'
             }
         }
 
