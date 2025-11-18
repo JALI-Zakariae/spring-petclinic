@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
 
         stage('Checkout') {
@@ -11,7 +10,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'mvnw -U clean test'
+
                 echo 'Running tests...'
                 bat './mvnw test'
                 echo 'les tests passent'
