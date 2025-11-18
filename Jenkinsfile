@@ -16,30 +16,27 @@ pipeline {
             }
         }
 
-
         stage('Package') {
             steps {
-                echo 'Building JAR...'
+                echo 'Compiling and packaging the app...'
                 sh './mvnw clean package'
             }
         }
 
         stage('SonarCloud Analysis') {
-                    steps {
-                        withSonarQubeEnv('SonarCloud') {
-                            script {
-                                def scannerHome = tool 'SonarScanner'
-                            }
-                            sh """
-                                ${tool('SonarScanner')}/bin/sonar-scanner \
-                                -Dsonar.projectKey=YassineZitouni29_spring-petclinic \
-                                -Dsonar.organization=yassinezitouni29 \
-                                -Dsonar.sources=. \
-                                -Dsonar.java.binaries=target/classes \
-                                -Dsonar.host.url=https://sonarcloud.io
-                            """
-                        }
-                    }
+            steps {
+                withSonarQubeEnv('SonarCloud') {
+                    sh """
+                        ${tool('SonarScanner')}/bin/sonar-scanner \
+                        -Dsonar.projectKey=YassineZitouni29_spring-petclinic \
+                        -Dsonar.organization=yassinezitouni29 \
+                        -Dsonar.sources=. \
+                        -Dsonar.java.binaries=target/classes \
+                        -Dsonar.host.url=https://sonarcloud.io
+                    """
+                }
+            }
+        }
 
         stage('Docker Build') {
             steps {
@@ -50,16 +47,8 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                echo 'Pushing Docker image to Docker Hub...'
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
-                    sh "docker tag petclinic:${BUILD_NUMBER} \$DOCKER_USER/petclinic:${BUILD_NUMBER}"
-                    sh "docker push \$DOCKER_USER/petclinic:${BUILD_NUMBER}"
-                }
+                echo 'Pushing image to Docker Hub...'
+                sh "docker push petclinic:${BUILD_NUMBER}"
             }
         }
 
