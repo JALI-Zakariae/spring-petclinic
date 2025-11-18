@@ -34,6 +34,8 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo 'Building Docker image...'
+                sh 'docker stop petclinic-test || true'
+                sh 'docker rm petclinic-test || true'
                 sh "docker build -t petclinic:${BUILD_NUMBER} ."
                 sh "docker run -d -p 9090:9090 --name petclinic-test petclinic:${BUILD_NUMBER}"
             }
