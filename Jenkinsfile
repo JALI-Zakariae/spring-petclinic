@@ -23,7 +23,12 @@ pipeline {
                 sh './mvnw clean package'
             }
         }
-
+        stage('Docker Build') {
+                    steps {
+                        echo 'Building Docker image...'
+                        sh "docker build -t petclinic:${BUILD_NUMBER} ."
+                    }
+                }
 
         
         stage('Finished') {
