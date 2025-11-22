@@ -26,7 +26,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                echo 'Building JAR..4.5....'
+                echo 'Building JAR..5....'
                 sh './mvnw clean package'
             }
         }
