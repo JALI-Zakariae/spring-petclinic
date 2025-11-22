@@ -57,7 +57,7 @@ pipeline {
 
         stage('Finished') {
             steps {
-                echo 'CI pipeline completed successfully!!!!'
+                echo 'CI pipeline completed successfully!!!!!!!'
             }
         }
     }
