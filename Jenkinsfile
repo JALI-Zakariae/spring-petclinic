@@ -53,7 +53,39 @@ pipeline {
                         }
                     }
                 }
+       
+        stage('Deploy to Kubernetes') {
+            steps {
+                echo 'Deploying to Kubernetes...'
+                script {
+                    
+                    sh "kubectl apply -f k8s/deployment.yaml"
+                    sh "kubectl apply -f k8s/service.yaml"
+                    
+                 
+                    sh "kubectl set image deployment/petclinic petclinic=${DOCKER_IMAGE} -n ${KUBE_NAMESPACE}"
+                    
+                
+                    sh "kubectl rollout status deployment/petclinic -n ${KUBE_NAMESPACE} --timeout=300s"
+                }
+            }
+        }
 
+        stage('Smoke Test') {
+            steps {
+                echo 'Running smoke tests...'
+                script {
+                  
+                    sh "sleep 30"
+                    
+                   
+                    sh """
+                        URL=\$(minikube service petclinic-service --url -n ${KUBE_NAMESPACE})
+                        curl -f \$URL/actuator/health || exit 1
+                    """
+                }
+            }
+        }
 
         stage('Finished') {
             steps {
