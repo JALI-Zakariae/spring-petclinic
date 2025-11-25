@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Project cloned automatically'
+                echo 'Project cloned automatically.'
             }
         }
 
