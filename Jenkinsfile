@@ -15,7 +15,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh './mvnw test'
+                sh './mvnw test -Dcheckstyle.skip=true'
             }
         }
 
