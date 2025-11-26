@@ -68,7 +68,7 @@ pipeline {
                 // Replace the container image inside the existing Deployment
                 sh """
                     kubectl set image deployment/petclinic \
-                        petclinic=\$DOCKER_USER/petclinic:${BUILD_NUMBER} \
+                        petclinic=$DOCKER_USER/petclinic:${BUILD_NUMBER} \
                         --record
                 """
             }
