@@ -23,7 +23,7 @@ pipeline {
                     steps {
                         script {
                             try {
-                                withSonarQubeEnv('SonarCloud') {
+                                withSonarQubeEnv('sonarcloud') {
                                     sh '''
                                         ./mvnw sonar:sonar \
                                         -Dsonar.projectKey=JALI-Zakariae_spring-petclinic \
