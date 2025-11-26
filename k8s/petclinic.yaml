@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+        - name: petclinic
+          image: zachyyyy/petclinic:26
+          ports:
+            - containerPort: 9090   # <── CHANGE THIS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic
+spec:
+  selector:
+    app: petclinic
+  ports:
+    - protocol: TCP
+      port: 9090               # <── CHANGE THIS
+      targetPort: 9090         # <── CHANGE THIS
+      nodePort: 32424          # (or remove to let K8s choose)
+  type: NodePort
