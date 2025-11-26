@@ -14,9 +14,20 @@ spec:
     spec:
       containers:
         - name: petclinic
-          image: zachyyyy/petclinic:26
+          image: zachyyyy/petclinic:latest
           ports:
-            - containerPort: 9090   # <── CHANGE THIS
+            - containerPort: 9090   # ← Garder 9090
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "mysql"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9090           # ← Garder 9090
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9090           # ← Gardeer 9090
 ---
 apiVersion: v1
 kind: Service
@@ -27,7 +38,6 @@ spec:
     app: petclinic
   ports:
     - protocol: TCP
-      port: 9090               # <── CHANGE THIS
-      targetPort: 9090         # <── CHANGE THIS
-      nodePort: 32424          # (or remove to let K8s choose)
+      port: 80               # ← Port externe HTTP
+      targetPort: 9090       # ← Port de l'application
   type: NodePort
