@@ -16,7 +16,7 @@ spec:
         - name: petclinic
           image: yassinezitouni29/petclinic:25
           ports:
-            - containerPort: 9090   # <── CHANGE THIS
+            - containerPort: 9090   
 ---
 apiVersion: v1
 kind: Service
@@ -27,8 +27,8 @@ spec:
     app: petclinic
   ports:
     - protocol: TCP
-      port: 9090               # <── CHANGE THIS
-      targetPort: 9090         # <── CHANGE THIS
-      nodePort: 32424          # (or remove to let K8s choose)
+      port: 9090               
+      targetPort: 9090         
+      nodePort: 32424          
   type: NodePort
 
